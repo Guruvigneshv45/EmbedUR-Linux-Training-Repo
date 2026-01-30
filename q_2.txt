@@ -1,0 +1,9 @@
+rohit45@rohit45-VirtualBox:~$ cd eUR
+rohit45@rohit45-VirtualBox:~/eUR$ ls
+prg1.txt
+rohit45@rohit45-VirtualBox:~/eUR$ touch prg2.txt
+rohit45@rohit45-VirtualBox:~/eUR$ ls -l prg2.txt
+-rw-rw-r-- 1 rohit45 rohit45 0 Jan 29 20:02 prg2.txt
+rohit45@rohit45-VirtualBox:~/eUR$ chmod g-w prg2.txt
+rohit45@rohit45-VirtualBox:~/eUR$ ls -l prg2.txt
+-rw-r--r-- 1 rohit45 rohit45 0 Jan 29 20:02 prg2.txt

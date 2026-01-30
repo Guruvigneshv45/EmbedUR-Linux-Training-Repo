@@ -1,0 +1,26 @@
+rohit45@rohit45-VirtualBox:~$ mkdir dir1
+rohit45@rohit45-VirtualBox:~$ cd dir1
+rohit45@rohit45-VirtualBox:~/dir1$ ls
+rohit45@rohit45-VirtualBox:~/dir1$ mkdir dir2
+rohit45@rohit45-VirtualBox:~/dir1$ cd dir2
+rohit45@rohit45-VirtualBox:~/dir1/dir2$ ls
+rohit45@rohit45-VirtualBox:~/dir1/dir2$ touch orgfile.txt
+rohit45@rohit45-VirtualBox:~/dir1/dir2$ echo "Original File @ /dir2" >> orgfile.txt
+rohit45@rohit45-VirtualBox:~/dir1/dir2$ cat orgfile.txt
+Original File @ /dir2
+rohit45@rohit45-VirtualBox:~/dir1/dir2$ cd ..
+rohit45@rohit45-VirtualBox:~/dir1$ ln -s dir2/orgfile.txt sflinkfile.txt
+rohit45@rohit45-VirtualBox:~/dir1$ ls -l
+total 4
+drwxrwxr-x 2 rohit45 rohit45 4096 Jan 29 22:13 dir2
+lrwxrwxrwx 1 rohit45 rohit45   16 Jan 29 22:14 sflinkfile.txt -> dir2/orgfile.txt
+rohit45@rohit45-VirtualBox:~/dir1$ cat sflinkfile.txt
+Original File @ /dir2
+rohit45@rohit45-VirtualBox:~/dir1$ cd dir2
+rohit45@rohit45-VirtualBox:~/dir1/dir2$ ls -l
+total 4
+-rw-rw-r-- 1 rohit45 rohit45 22 Jan 29 22:14 orgfile.txt
+rohit45@rohit45-VirtualBox:~/dir1/dir2$ cat orgfile.txt
+Original File @ /dir2
+rohit45@rohit45-VirtualBox:~/dir1/dir2$ 
+

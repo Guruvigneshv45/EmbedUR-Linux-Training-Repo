@@ -1,0 +1,25 @@
+rohit45@rohit45-VirtualBox:~$ mkdir dir1
+rohit45@rohit45-VirtualBox:~$ cd dir1
+rohit45@rohit45-VirtualBox:~/dir1$ touch result_file1.txt
+rohit45@rohit45-VirtualBox:~/dir1$ touch result_file2.txt
+rohit45@rohit45-VirtualBox:~/dir1$ touch btest_file.txt
+rohit45@rohit45-VirtualBox:~/dir1$ touch ztest_file.txt
+rohit45@rohit45-VirtualBox:~/dir1$ touch atest_file.txt
+rohit45@rohit45-VirtualBox:~/dir1$ ls -lt >> result_file1.txt
+rohit45@rohit45-VirtualBox:~/dir1$ cat result_file1.txt
+total 0
+-rw-rw-r-- 1 rohit45 rohit45 0 Jan 29 21:26 atest_file.txt
+-rw-rw-r-- 1 rohit45 rohit45 0 Jan 29 21:26 ztest_file.txt
+-rw-rw-r-- 1 rohit45 rohit45 0 Jan 29 21:26 btest_file.txt
+-rw-rw-r-- 1 rohit45 rohit45 0 Jan 29 21:25 result_file2.txt
+-rw-rw-r-- 1 rohit45 rohit45 0 Jan 29 21:25 result_file1.txt
+rohit45@rohit45-VirtualBox:~/dir1$ ls -ltr >> result_file2.txt
+rohit45@rohit45-VirtualBox:~/dir1$ cat result_file2.txt
+total 4
+-rw-rw-r-- 1 rohit45 rohit45   0 Jan 29 21:25 result_file2.txt
+-rw-rw-r-- 1 rohit45 rohit45   0 Jan 29 21:26 btest_file.txt
+-rw-rw-r-- 1 rohit45 rohit45   0 Jan 29 21:26 ztest_file.txt
+-rw-rw-r-- 1 rohit45 rohit45   0 Jan 29 21:26 atest_file.txt
+-rw-rw-r-- 1 rohit45 rohit45 307 Jan 29 21:26 result_file1.txt
+rohit45@rohit45-VirtualBox:~/dir1$ 
+

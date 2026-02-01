@@ -1,0 +1,6 @@
+rohit45@rohit45-VirtualBox:~$ ls -lb /var/log | awk ' $5>1048576 {print $0}' > opfile.txt
+rohit45@rohit45-VirtualBox:~$ cat opfile.txt
+-rw-r--r--  1 root              root            1176523 Jan 31 12:21 dpkg.log.1
+-rw-r-----  1 syslog            adm             1781888 Feb  1 11:53 kern.log.1
+-rw-r-----  1 syslog            adm             5840041 Feb  1 11:53 syslog.1
+rohit45@rohit45-VirtualBox:~$ 

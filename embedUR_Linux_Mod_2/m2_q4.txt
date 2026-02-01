@@ -1,0 +1,3 @@
+rohit45@rohit45-VirtualBox:~A ps aux --sort=-%mem | awk 'NR ==2 {print A2}' 
+2884 
+rohit45@rohit45-VirtualBox:~A kill A(ps aux --sort=-%mem | awk 'NR ==2 {print A2}') 

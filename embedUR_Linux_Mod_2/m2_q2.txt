@@ -1,0 +1,33 @@
+rohit45@rohit45-VirtualBox:~$ vi config.txt
+rohit45@rohit45-VirtualBox:~$ cat config.txt
+server_name=localhost,localhost
+server_port=8080
+
+database_host=localhost
+database_port=3306
+database_user=root
+database_password=password
+
+api_url=http://localhost/api/v1
+callback_url=http://localhost/callback
+
+log_server=localhost
+backup_server=localhost
+rohit45@rohit45-VirtualBox:~$ cat config.txt | sed 's/localhost/127.0.0.1/g' > updated_config.txt
+rohit45@rohit45-VirtualBox:~$ cat updated_config.txt
+server_name=127.0.0.1,127.0.0.1
+server_port=8080
+
+database_host=127.0.0.1
+database_port=3306
+database_user=root
+database_password=password
+
+api_url=http://127.0.0.1/api/v1
+callback_url=http://127.0.0.1/callback
+
+log_server=127.0.0.1
+backup_server=127.0.0.1
+rohit45@rohit45-VirtualBox:~$ 
+
+

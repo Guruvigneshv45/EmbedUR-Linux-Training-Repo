@@ -1,0 +1,199 @@
+rohit45@rohit45-VirtualBox:~$ cat backup_manager.sh 
+#!/bin/bash
+
+echo
+echo "BACKUP MANAGER"
+echo "____________________"
+
+sdir="$1"
+ddir="$2"
+ft="$3"
+
+
+echo "CHECK DETAILS"
+echo "____________________"
+echo "SOURCE DIR = $sdir"
+echo "DESTINATION DIR = $ddir"
+echo "FILE TYPE = $ft"
+echo
+
+
+declare -A FILE_SIZE
+shopt -s nullglob
+for a in "$sdir"/*."$ft"
+do
+    fname=$(basename "$a")
+    size=$(stat -c %s "$a")
+    FILE_SIZE["$fname"]="$size"
+done
+shopt -u nullglob
+
+echo
+if [ "${#FILE_SIZE[@]}" -eq 0 ]; then
+    echo "NO FILE WITH THE GIVEN EXTENSION .$ft IS FOUND. Exiting..."
+    exit
+else
+	echo "SOURCE_DIR CHECK SUCCEDED"
+fi
+
+export BACKUP_COUNT="${#FILE_SIZE[@]}"
+echo "NUMBER OF FILES CAPTURED IN THE GIVEN FORMAT : $BACKUP_COUNT"
+
+echo
+echo "FILE REPORT"
+echo "____________________"
+
+for fname in "${!FILE_SIZE[@]}"
+do
+    echo "$fname (SIZE : ${FILE_SIZE[$fname]} BYTES)"
+done
+echo
+if [ -d "$ddir" ]; then
+    echo "BACKUP_DIRECTORY EXISTS "$ddir""
+else
+    echo "BACKUP_DIRECTORY NOT FOUND, CREATING $ddir"
+    mkdir -p "$ddir"
+    if [ $? -ne 0 ]; then
+        echo "BACKUP_DIRECTORY CREATION FAILED. Exiting..."
+        exit 1
+    fi
+fi
+echo
+backup_files=0
+total_size=0
+backup_files=0
+total_size=0
+
+for filename in "${!FILE_SIZE[@]}"
+do
+    sourcev="$sdir/$filename"
+    backupv="$ddir/$filename"
+
+    if [ ! -e "$backupv" ]; then
+        cp "$sourcev" "$backupv"
+        if [ $? -eq 0 ]; then
+            ((backup_files++))
+            ((total_size += FILE_SIZE["$filename"]))
+            echo "NEW FILE CREATED AND BACKUP SUCCESS"
+        fi
+
+    elif [ "$sourcev" -nt "$backupv" ]; then
+        cp "$sourcev" "$backupv"
+        if [ $? -eq 0 ]; then
+            ((backup_files++))
+            ((total_size += FILE_SIZE["$filename"]))
+            echo "NEW CHANGES FOUND..."
+            echo "BACKUP SUCCESS OVERWRITTEN ON OLD BACKUP FILE"
+        fi
+
+    else
+        echo "FILE $filename IS UP-TO-DATE"
+    fi
+done
+
+echo
+echo "PATH TO THE BACKUP DIRECTORY : $ddir"
+echo "OUTPUT REPORT PROCESSING ON $ddir/backup_report.log"
+
+echo "$(date)" >> "$ddir/backup_report.log"
+echo "TOTAL FILES PROCESSED : $backup_files" >> "$ddir/backup_report.log"
+echo "TOTAL FILE SIZE PROCESSED : $total_size" >> "$ddir/backup_report.log"
+echo "PATH TO THE BACKUP DIRECTORY : $ddir" >> "$ddir/backup_report.log"
+
+echo "REPORT SAVED, BACKUPS COMPLETED"
+echo
+rohit45@rohit45-VirtualBox:~$ cd sdr
+rohit45@rohit45-VirtualBox:~/sdr$ ls
+filec1.csv  filec2.csv  filec3.csv  files1.sh  files2.sh  files3.sh  files4.sh  filet1.txt  filet2.txt  filet3.txt  filet4.txt  newfile.txt
+rohit45@rohit45-VirtualBox:~/sdr$ cd ddr
+bash: cd: ddr: No such file or directory
+rohit45@rohit45-VirtualBox:~/sdr$ ./backup_manager.sh "sdr" "ddr" "txt"
+bash: ./backup_manager.sh: No such file or directory
+rohit45@rohit45-VirtualBox:~/sdr$ cd ..
+rohit45@rohit45-VirtualBox:~$ ./backup_manager.sh "sdr" "ddr" "txt"
+BACKUP MANAGER
+____________________
+CHECK DETAILS
+____________________
+SOURCE DIR = sdr
+DESTINATION DIR = ddr
+FILE TYPE = txt
+
+
+SOURCE_DIR CHECK SUCCEDED
+NUMBER OF FILES CAPTURED IN THE GIVEN FORMAT : 5
+
+FILE REPORT
+____________________
+filet1.txt (SIZE : 830 BYTES)
+filet2.txt (SIZE : 896 BYTES)
+newfile.txt (SIZE : 40 BYTES)
+filet3.txt (SIZE : 706 BYTES)
+filet4.txt (SIZE : 63 BYTES)
+
+BACKUP_DIRECTORY NOT FOUND, CREATING ddr
+
+NEW FILE CREATED AND BACKUP SUCCESS
+NEW FILE CREATED AND BACKUP SUCCESS
+NEW FILE CREATED AND BACKUP SUCCESS
+NEW FILE CREATED AND BACKUP SUCCESS
+NEW FILE CREATED AND BACKUP SUCCESS
+
+PATH TO THE BACKUP DIRECTORY : ddr
+OUTPUT REPORT PROCESSING ON ddr/backup_report.log
+REPORT SAVED, BACKUPS COMPLETED
+
+rohit45@rohit45-VirtualBox:~$ cd ddr
+rohit45@rohit45-VirtualBox:~/ddr$ ls
+backup_report.log  filet1.txt  filet2.txt  filet3.txt  filet4.txt  newfile.txt
+rohit45@rohit45-VirtualBox:~/ddr$ cat backup_report.log 
+Mon Feb  2 08:11:17 PM IST 2026
+TOTAL FILES PROCESSED : 5
+TOTAL FILE SIZE PROCESSED : 2535
+PATH TO THE BACKUP DIRECTORY : ddr
+rohit45@rohit45-VirtualBox:~/ddr$ cd ..
+rohit45@rohit45-VirtualBox:~$ ./backup_manager.sh "sdr" "ddr" "txt"
+
+BACKUP MANAGER
+____________________
+CHECK DETAILS
+____________________
+SOURCE DIR = sdr
+DESTINATION DIR = ddr
+FILE TYPE = txt
+
+
+SOURCE_DIR CHECK SUCCEDED
+NUMBER OF FILES CAPTURED IN THE GIVEN FORMAT : 5
+
+FILE REPORT
+____________________
+filet1.txt (SIZE : 830 BYTES)
+filet2.txt (SIZE : 896 BYTES)
+newfile.txt (SIZE : 40 BYTES)
+filet3.txt (SIZE : 706 BYTES)
+filet4.txt (SIZE : 63 BYTES)
+
+BACKUP_DIRECTORY EXISTS ddr
+
+FILE filet1.txt IS UP-TO-DATE
+FILE filet2.txt IS UP-TO-DATE
+FILE newfile.txt IS UP-TO-DATE
+FILE filet3.txt IS UP-TO-DATE
+FILE filet4.txt IS UP-TO-DATE
+
+PATH TO THE BACKUP DIRECTORY : ddr
+OUTPUT REPORT PROCESSING ON ddr/backup_report.log
+REPORT SAVED, BACKUPS COMPLETED
+
+rohit45@rohit45-VirtualBox:~$ cd ddr
+rohit45@rohit45-VirtualBox:~/ddr$ cat backup_report.log 
+Mon Feb  2 08:11:17 PM IST 2026
+TOTAL FILES PROCESSED : 5
+TOTAL FILE SIZE PROCESSED : 2535
+PATH TO THE BACKUP DIRECTORY : ddr
+Mon Feb  2 08:11:44 PM IST 2026
+TOTAL FILES PROCESSED : 0
+TOTAL FILE SIZE PROCESSED : 0
+PATH TO THE BACKUP DIRECTORY : ddr
+rohit45@rohit45-VirtualBox:~/ddr$

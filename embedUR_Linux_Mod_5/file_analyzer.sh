@@ -32,7 +32,7 @@ rec_filesearch()
 }
 
 logger(){
-	echo -e "$(date)""\n$1\n" >> errors.log
+	echo -e "$(date)\n$1\n" | tee -a errors.log >&2 
 }
 
 here_doc()
@@ -90,7 +90,7 @@ do
 	esac
 done
 
-echo "SCRIPT: $0"
+echo "IN SCRIPT: $0"
 echo "TOTAL ARGS : $#"
 echo "ARGS ENTERED : $@"
 echo
